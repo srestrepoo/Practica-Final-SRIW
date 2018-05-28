@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#"
+     xml:base="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#esCercanoA -->
+
+    <owl:ObjectProperty rdf:about="http://xmlns.com/foaf/spec/#esCercanoA">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#tiene -->
+
+    <owl:ObjectProperty rdf:about="http://xmlns.com/foaf/spec/#tiene">
+        <owl:inverseOf rdf:resource="http://xmlns.com/foaf/spec/#ubicadoEn"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#tieneLugar -->
+
+    <owl:ObjectProperty rdf:about="http://xmlns.com/foaf/spec/#tieneLugar">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#ubicadoEn -->
+
+    <owl:ObjectProperty rdf:about="http://xmlns.com/foaf/spec/#ubicadoEn">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#direccion -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/spec/#direccion"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#estado -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/spec/#estado"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#latitud -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/spec/#latitud"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#longitud -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/spec/#longitud"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#name -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/spec/#name"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#temperatura -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/spec/#temperatura"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#tipo -->
+
+    <owl:DatatypeProperty rdf:about="http://xmlns.com/foaf/spec/#tipo"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Abierta -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Abierta">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#puntoInternet"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf rdf:resource="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Cerrada"/>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Cerrada -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Cerrada">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#puntoInternet"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf rdf:resource="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Abierta"/>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Departamento -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Departamento">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://xmlns.com/foaf/spec/#tiene"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Municipio"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://xmlns.com/foaf/spec/#tiene"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">125</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Municipio"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Municipio"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Lugar -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Lugar">
+        <owl:equivalentClass rdf:resource="http://xmlns.com/foaf/spec/#Georeferencia"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://xmlns.com/foaf/spec/#ubicadoEn"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Municipio"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Municipio -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Municipio">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://xmlns.com/foaf/spec/#tiene"/>
+                <owl:someValuesFrom rdf:resource="http://xmlns.com/foaf/spec/#Georeferencia"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://xmlns.com/foaf/spec/#ubicadoEn"/>
+                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#Departamento"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#puntoInternet -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/sebastian/ontologies/2018/4/trabajoWeb#puntoInternet"/>
+    
+
+
+    <!-- http://xmlns.com/foaf/spec/#Georeferencia -->
+
+    <owl:Class rdf:about="http://xmlns.com/foaf/spec/#Georeferencia"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+
