@@ -6,20 +6,16 @@ import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
-import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.vocabulary.*;
-import org.apache.commons.*;
 import org.apache.commons.lang3.StringUtils;
 
 import virtuoso.jena.driver.*;
 import java.util.Hashtable;
 
-public class EjemploAPI_01 {
+public class CargueDatos {
 
 	// algunas definiciones
     static String personURI    = "http://www.sistemarecomendacion.com/sitiosWifi#";
@@ -151,6 +147,7 @@ public class EjemploAPI_01 {
     	}
         return munTemp.get(Muni);
     }
+    
     public static void llenarTemp(){
         String sparqlQueryString2 ="PREFIX dbo: <http://dbpedia.org/ontology/> " +
         "   PREFIX dbpedia: <http://es.dbpedia.org/> " +
