@@ -149,7 +149,7 @@ public class wifiPlace {
 	    	    if(nombres[6]!=null){
 	    	    	recursos[0].addProperty(temperatura, nombres[6]);
 	    	    }
-	    	    recursos[0].addProperty(tipo, "Abierto");
+	    	    recursos[0].addProperty(tipo, "Cerrado");
 	    	    recursos[3].addProperty(name, "geo" + nombres[0]);
 	    	    recursos[3].addProperty(direccion, nombres[4]);
         	}
