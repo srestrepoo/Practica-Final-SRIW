@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import model.User;
 
 public class Users {
-	private static ArrayList<User> activeUsers;
+	//Agregar usuarios
+	private static ArrayList<User> activeUsers = new ArrayList<User>();
+	private static User activeUser;
 	
 	public static void addUser(User user) {
 		activeUsers.add(user);
@@ -15,7 +17,19 @@ public class Users {
 		return activeUsers.remove(user);
 	}
 	
-	public static ArrayList<User> getActiveUser(){
+	public static ArrayList<User> getActiveUsers(){
 		return activeUsers;
 	}
+	
+    public static void login(User user){
+        activeUser = user;
+    }
+    
+    public static void signOut(){
+        activeUser = null;
+    }
+    
+    public static User getActiveUser(){
+        return activeUser;
+    }
 }

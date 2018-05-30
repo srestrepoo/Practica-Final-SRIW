@@ -1,18 +1,18 @@
 package model;
 
 public class User {
-	private String name;
+	private String userName;
 	private String password;
 	private String[] characteristics;
 	
 	public User(String Name, String Password, String[] Characteristics) {
-		this.name = Name;
+		this.userName = Name;
 		this.password = Password;
 		this.characteristics = Characteristics;
 	}
 	
-	public String getName() {
-		return this.name;
+	public String getUserName() {
+		return this.userName;
 	}
 	
 	public String getPassword() {

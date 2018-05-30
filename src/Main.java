@@ -1,12 +1,17 @@
 
-import controller.*;
-import org.apache.jena.rdf.model.Model;
+//import org.apache.jena.rdf.model.Model;
+
+//import model.wifiPlace;
+import view.IniciarSesion;
+
 
 public class Main {
 
 	public static void main(String[] args) {
-		Model wifiPlace = model.getWifiPlace();
-		wifiPlace.write(System.out,"RDF/XML");
+		IniciarSesion iniciarSesion = new IniciarSesion();
+		iniciarSesion.setVisible(true);
+		//Model model = wifiPlace.getInstance();
+        //model.write(System.out, "TURTLE");
 	}
 
 }
