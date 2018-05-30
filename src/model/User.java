@@ -3,12 +3,12 @@ package model;
 public class User {
 	private String userName;
 	private String password;
-	private String[] characteristics;
+	private String Department;
 	
-	public User(String Name, String Password, String[] Characteristics) {
+	public User(String Name, String Password, String Department) {
 		this.userName = Name;
 		this.password = Password;
-		this.characteristics = Characteristics;
+		this.Department = Department;
 	}
 	
 	public String getUserName() {
@@ -19,7 +19,7 @@ public class User {
 		return this.password;
 	}
 	
-	public String[] getCharacteristics() {
-		return this.characteristics;
+	public String getDepartment() {
+		return this.Department;
 	}
 }

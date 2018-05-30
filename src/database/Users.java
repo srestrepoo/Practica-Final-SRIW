@@ -13,10 +13,6 @@ public class Users {
 		activeUsers.add(user);
 	}
 	
-	public static boolean removeUser(User user) {
-		return activeUsers.remove(user);
-	}
-	
 	public static ArrayList<User> getActiveUsers(){
 		return activeUsers;
 	}

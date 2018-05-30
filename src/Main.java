@@ -1,7 +1,7 @@
 
-//import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
-//import model.wifiPlace;
+import model.wifiPlace;
 import view.IniciarSesion;
 
 
@@ -12,6 +12,7 @@ public class Main {
 		iniciarSesion.setVisible(true);
 		//Model model = wifiPlace.getInstance();
         //model.write(System.out, "TURTLE");
+        
 	}
 
 }

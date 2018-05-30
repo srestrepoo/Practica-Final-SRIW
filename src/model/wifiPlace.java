@@ -38,7 +38,7 @@ public class wifiPlace {
 	 */
 	private static Model loadDataBase() {
 		Model model = ModelFactory.createDefaultModel();
-	       
+	    System.out.print("Virtuoso");
 	    Property tiene = model.createProperty(personURI+"tiene");
 	    Property name = model.createProperty(personURI+"name");
 	    Property estado = model.createProperty(personURI+"estado");
@@ -107,6 +107,7 @@ public class wifiPlace {
 		}
 		
 		//Consulta a D2R
+		System.out.print("D2R");
 		String sparqlQueryString1 = "PREFIX vocab: <http://localhost:2020/resource/vocab/> "+
 									"SELECT DISTINCT ?Nombre ?Estado ?Direccion ?Municipio ?Departamento ?Georeferencia "+
 									"WHERE{ "+
