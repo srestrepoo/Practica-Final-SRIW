@@ -9,10 +9,12 @@ import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.riot.resultset.ResultSetReaderFactory;
 
 import virtuoso.jena.driver.VirtGraph;
 import virtuoso.jena.driver.VirtuosoQueryExecution;
@@ -23,10 +25,31 @@ public class wifiPlace {
 	private static String personURI    = "http://www.sistemarecomendacion.com/sitiosWifi#";
 	private static Hashtable<String, String> munTemp = new Hashtable<String, String>();
 	
-	//Método privado para no crear más instancias
-	private wifiPlace() {}
+	private String Nombre;
+	private String Temperatura;
+	private String Direccion;
+	private String Departamento;
+	private String Municipio;
+	private String Tipo;
+	
+	//Constructor para los objetos recomendados
+	public wifiPlace(String nombre, String temperatura, String direccion, String departamento, String municipio, String tipo) {
+		Nombre = nombre;
+		Temperatura = temperatura;
+		Direccion = direccion;
+		Departamento = departamento;
+		Municipio = municipio;
+		Tipo = tipo;
+	}
+	
+	//Constructor para los objetos a calificar
+	public wifiPlace(String nombre, String temperatura, String tipo) {
+		Nombre = nombre;
+		Temperatura = temperatura;
+		Tipo = tipo;
+	}
 
-	public static Model getInstance(){
+	public static Model getModel(){
 		llenarTemp();
 		return loadDataBase();
 	}
@@ -186,15 +209,18 @@ public class wifiPlace {
                 String temp = soln.getLiteral("Temperatura").getString();
                 String mun = soln.getLiteral("nombreMunicipio").getString();
             	String Muni;
+            	Double temperatura = Double.parseDouble(temp) - 273.15;
             	if(mun.length()>3){
             		Muni = StringUtils.stripAccents(mun.substring(0, 3));
             	}else{
             		Muni = StringUtils.stripAccents(mun.substring(0, 2));
             	}
-                munTemp.put(Muni, temp);
+                //munTemp.put(Muni, temp);
+                munTemp.put(Muni, String.valueOf(temperatura));
         	}
         }
         finally {
+        	
            qexec.close();
         }
 	}
@@ -216,4 +242,28 @@ public class wifiPlace {
         return munTemp.get(Muni);
     }
 	
+	
+	public String getTemperatura() {
+		return Temperatura;
+	}
+	
+	public String getNombre() {
+		return Nombre;
+	}
+	
+	public String getTipo() {
+		return Tipo;
+	}
+	
+	public String getDireccion() {
+		return Direccion;
+	}
+	
+	public String getDepartamento() {
+		return Departamento;
+	}
+	
+	public String getMunicipio() {
+		return Municipio;
+	}
 }

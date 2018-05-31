@@ -6,19 +6,31 @@ import javax.swing.border.EmptyBorder;
 
 import org.apache.jena.rdf.model.Model;
 
+import model.wifiPlace;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+
+import java.util.ArrayList;
+
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CalificarPuntos extends JFrame {
 
 	private JPanel contentPane;
+	private JComboBox<String> primerComboBox;
+	private JComboBox<String> segundoComboBox;
+	private JComboBox<String> tercerComboBox;
+	private JComboBox<String> cuartoComboBox;
+	private JComboBox<String> quintoComboBox;
 
 	/**
 	 * Create the frame.
 	 */
-	public CalificarPuntos(Model database) {
+	public CalificarPuntos(ArrayList<wifiPlace> puntosCalificar) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 436, 515);
@@ -44,16 +56,33 @@ public class CalificarPuntos extends JFrame {
 		lblTipo.setBounds(6, 49, 90, 16);
 		panel.add(lblTipo);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Me gusta", "No me gusta"}));
-		comboBox.setBounds(199, 38, 127, 27);
-		panel.add(comboBox);
+		primerComboBox = new JComboBox<String>();
+		primerComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Me gusta", "No me gusta"}));
+		primerComboBox.setBounds(216, 45, 127, 27);
+		panel.add(primerComboBox);
+		
+		JLabel lblPrimernombre = new JLabel(puntosCalificar.get(0).getNombre());
+		lblPrimernombre.setBounds(91, 6, 235, 16);
+		panel.add(lblPrimernombre);
+		
+		JLabel lblPrimerTemperatura = new JLabel(puntosCalificar.get(0).getTemperatura());
+		lblPrimerTemperatura.setBounds(91, 27, 235, 16);
+		panel.add(lblPrimerTemperatura);
+		
+		JLabel lblPrimerTipo = new JLabel(puntosCalificar.get(0).getTipo());
+		lblPrimerTipo.setBounds(91, 49, 125, 16);
+		panel.add(lblPrimerTipo);
 		
 		JLabel lblPuntosACalificar = new JLabel("PUNTOS A CALIFICAR");
 		lblPuntosACalificar.setBounds(144, 13, 144, 14);
 		contentPane.add(lblPuntosACalificar);
 		
 		JButton btnPuntosQueMe = new JButton("Puntos que me podrian gustar");
+		btnPuntosQueMe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				calificarPuntos(e);
+			}
+		});
 		btnPuntosQueMe.setBounds(89, 450, 245, 23);
 		contentPane.add(btnPuntosQueMe);
 		
@@ -74,10 +103,22 @@ public class CalificarPuntos extends JFrame {
 		label_2.setBounds(6, 49, 90, 16);
 		panel_1.add(label_2);
 		
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {"Me gusta", "No me gusta"}));
-		comboBox_1.setBounds(199, 38, 127, 27);
-		panel_1.add(comboBox_1);
+		segundoComboBox = new JComboBox<String>();
+		segundoComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Me gusta", "No me gusta"}));
+		segundoComboBox.setBounds(216, 45, 127, 27);
+		panel_1.add(segundoComboBox);
+		
+		JLabel lblSegundoNombre = new JLabel(puntosCalificar.get(1).getNombre());
+		lblSegundoNombre.setBounds(93, 6, 233, 16);
+		panel_1.add(lblSegundoNombre);
+		
+		JLabel lblSegundaTemperatura = new JLabel(puntosCalificar.get(1).getTemperatura());
+		lblSegundaTemperatura.setBounds(93, 27, 233, 16);
+		panel_1.add(lblSegundaTemperatura);
+		
+		JLabel lblSegundoTipo = new JLabel(puntosCalificar.get(1).getTipo());
+		lblSegundoTipo.setBounds(93, 49, 125, 16);
+		panel_1.add(lblSegundoTipo);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(null);
@@ -96,10 +137,22 @@ public class CalificarPuntos extends JFrame {
 		label_5.setBounds(6, 49, 90, 16);
 		panel_2.add(label_5);
 		
-		JComboBox<String> comboBox_2 = new JComboBox<String>();
-		comboBox_2.setModel(new DefaultComboBoxModel<String>(new String[] {"Me gusta", "No me gusta"}));
-		comboBox_2.setBounds(199, 38, 127, 27);
-		panel_2.add(comboBox_2);
+		tercerComboBox = new JComboBox<String>();
+		tercerComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Me gusta", "No me gusta"}));
+		tercerComboBox.setBounds(216, 45, 127, 27);
+		panel_2.add(tercerComboBox);
+		
+		JLabel lblTercerNombre = new JLabel(puntosCalificar.get(2).getNombre());
+		lblTercerNombre.setBounds(93, 6, 233, 16);
+		panel_2.add(lblTercerNombre);
+		
+		JLabel lblTercerTemperatura = new JLabel(puntosCalificar.get(2).getTemperatura());
+		lblTercerTemperatura.setBounds(93, 27, 233, 16);
+		panel_2.add(lblTercerTemperatura);
+		
+		JLabel lblTercerTipo = new JLabel(puntosCalificar.get(2).getTipo());
+		lblTercerTipo.setBounds(93, 49, 125, 16);
+		panel_2.add(lblTercerTipo);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
@@ -118,10 +171,22 @@ public class CalificarPuntos extends JFrame {
 		label_8.setBounds(6, 49, 90, 16);
 		panel_3.add(label_8);
 		
-		JComboBox<String> comboBox_3 = new JComboBox<String>();
-		comboBox_3.setModel(new DefaultComboBoxModel<String>(new String[] {"Me gusta", "No me gusta"}));
-		comboBox_3.setBounds(199, 38, 127, 27);
-		panel_3.add(comboBox_3);
+		cuartoComboBox = new JComboBox<String>();
+		cuartoComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Me gusta", "No me gusta"}));
+		cuartoComboBox.setBounds(216, 45, 127, 27);
+		panel_3.add(cuartoComboBox);
+		
+		JLabel lblCuartoNombre = new JLabel(puntosCalificar.get(3).getNombre());
+		lblCuartoNombre.setBounds(91, 6, 235, 16);
+		panel_3.add(lblCuartoNombre);
+		
+		JLabel lblCuartaTemperatura = new JLabel(puntosCalificar.get(3).getTemperatura());
+		lblCuartaTemperatura.setBounds(91, 27, 235, 16);
+		panel_3.add(lblCuartaTemperatura);
+		
+		JLabel lblCuartoTipo = new JLabel(puntosCalificar.get(3).getTipo());
+		lblCuartoTipo.setBounds(91, 49, 125, 16);
+		panel_3.add(lblCuartoTipo);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setLayout(null);
@@ -140,10 +205,30 @@ public class CalificarPuntos extends JFrame {
 		label_11.setBounds(6, 49, 90, 16);
 		panel_4.add(label_11);
 		
-		JComboBox<String> comboBox_4 = new JComboBox<String>();
-		comboBox_4.setModel(new DefaultComboBoxModel<String>(new String[] {"Me gusta", "No me gusta"}));
-		comboBox_4.setBounds(199, 38, 127, 27);
-		panel_4.add(comboBox_4);
+		quintoComboBox = new JComboBox<String>();
+		quintoComboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Me gusta", "No me gusta"}));
+		quintoComboBox.setBounds(216, 45, 127, 27);
+		panel_4.add(quintoComboBox);
+		
+		JLabel lblQuintoNombre = new JLabel(puntosCalificar.get(4).getNombre());
+		lblQuintoNombre.setBounds(94, 6, 232, 16);
+		panel_4.add(lblQuintoNombre);
+		
+		JLabel lblQuintaTemperatura = new JLabel(puntosCalificar.get(4).getTemperatura());
+		lblQuintaTemperatura.setBounds(94, 27, 232, 16);
+		panel_4.add(lblQuintaTemperatura);
+		
+		JLabel lblQuintoTipo = new JLabel(puntosCalificar.get(4).getTipo());
+		lblQuintoTipo.setBounds(94, 49, 125, 16);
+		panel_4.add(lblQuintoTipo);
 		this.setLocationRelativeTo(null);
+	}
+	
+	private void calificarPuntos(ActionEvent evt){
+		System.out.println(primerComboBox.getSelectedItem());
+		System.out.println(segundoComboBox.getSelectedItem());
+		System.out.println(tercerComboBox.getSelectedItem());
+		System.out.println(cuartoComboBox.getSelectedItem());
+		System.out.println(quintoComboBox.getSelectedItem());
 	}
 }
