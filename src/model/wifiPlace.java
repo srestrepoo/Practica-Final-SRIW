@@ -38,7 +38,6 @@ public class wifiPlace {
 	 */
 	private static Model loadDataBase() {
 		Model model = ModelFactory.createDefaultModel();
-	    System.out.print("Virtuoso");
 	    Property tiene = model.createProperty(personURI+"tiene");
 	    Property name = model.createProperty(personURI+"name");
 	    Property estado = model.createProperty(personURI+"estado");
@@ -84,6 +83,7 @@ public class wifiPlace {
 	         //nombres[5] = soln.getLiteral("Georeferencia").getString();
 	        nombres[6] = getTemperatura(nombres[2]);
 	         //Agregar datos al modelo
+	        
 	    	recursos[0] = model.createResource(personURI + nombres[0]);
     	    recursos[1] = model.createResource(personURI + nombres[1]);
     	    recursos[2] = model.createResource(personURI + nombres[2]);
@@ -107,7 +107,6 @@ public class wifiPlace {
 		}
 		
 		//Consulta a D2R
-		System.out.print("D2R");
 		String sparqlQueryString1 = "PREFIX vocab: <http://localhost:2020/resource/vocab/> "+
 									"SELECT DISTINCT ?Nombre ?Estado ?Direccion ?Municipio ?Departamento ?Georeferencia "+
 									"WHERE{ "+

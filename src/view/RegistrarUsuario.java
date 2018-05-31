@@ -1,8 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,22 +22,6 @@ public class RegistrarUsuario extends JFrame {
 	private JTextField textUserName;
 	private JPasswordField textPassword;
 	private JComboBox<String> comboBoxDepartment;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RegistrarUsuario frame = new RegistrarUsuario();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -98,11 +79,13 @@ public class RegistrarUsuario extends JFrame {
 	
 	
 	private void BotonRegistrar(java.awt.event.ActionEvent evt){
-		if(!textUserName.getText().isEmpty()  &&  String.valueOf(textPassword.getPassword()).isEmpty() ) {
+		if(!textUserName.getText().isEmpty()  &&  !String.valueOf(textPassword.getPassword()).isEmpty() ) {
 			Users.addUser(new User(textUserName.getText(), String.valueOf(textPassword.getPassword()), comboBoxDepartment.getSelectedItem().toString()));
 			this.setVisible(false);
-			(new CalificarPuntos()).setVisible(true);
+			(new cargarDatos()).setVisible(true);
 		}else {
+			System.out.print(textUserName.getText());
+			System.out.print("Campos vacios");
 			System.out.print("Campos vacios");
 		}
 	}
