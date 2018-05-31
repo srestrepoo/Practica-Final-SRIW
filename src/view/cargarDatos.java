@@ -74,6 +74,14 @@ public class cargarDatos extends JFrame {
 			puntosWifi = new ArrayList<wifiPlace>();
 			System.out.println(results.getRowNumber()); //Cantidad de filas
 			while ( results.hasNext() ) {
+				if(puntosWifi.size() == 4) {
+					QuerySolution soln = results.nextSolution();
+	                String nombre = soln.getLiteral("nombrePuntoWIFI").getString();
+	                String tipo = soln.getLiteral("tipo").getString();
+	                String temperatura = soln.getLiteral("temperatura").getString();
+	                puntosWifi.add(new wifiPlace(nombre, tipo, temperatura));
+					break;
+				}
                 QuerySolution soln = results.nextSolution();
                 String nombre = soln.getLiteral("nombrePuntoWIFI").getString();
                 String tipo = soln.getLiteral("tipo").getString();
