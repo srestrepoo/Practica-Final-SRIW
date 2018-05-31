@@ -80,8 +80,10 @@ public class RegistrarUsuario extends JFrame {
 	
 	private void BotonRegistrar(java.awt.event.ActionEvent evt){
 		if(!textUserName.getText().isEmpty()  &&  !String.valueOf(textPassword.getPassword()).isEmpty() ) {
-			Users.addUser(new User(textUserName.getText(), String.valueOf(textPassword.getPassword()), comboBoxDepartment.getSelectedItem().toString()));
+			User usuario = new User(textUserName.getText(), String.valueOf(textPassword.getPassword()), comboBoxDepartment.getSelectedItem().toString());
+			Users.addUser(usuario);
 			this.setVisible(false);
+			Users.login(usuario);
 			(new cargarDatos()).setVisible(true);
 		}else {
 			System.out.print(textUserName.getText());

@@ -43,7 +43,7 @@ public class wifiPlace {
 	}
 	
 	//Constructor para los objetos a calificar
-	public wifiPlace(String nombre, String temperatura, String tipo) {
+	public wifiPlace(String nombre, String tipo, String temperatura) {
 		Nombre = nombre;
 		Temperatura = temperatura;
 		Tipo = tipo;
@@ -179,7 +179,7 @@ public class wifiPlace {
      }finally{}
 
       //escribe el modelo en forma de XML
-      model.write(System.out,"TURTLE");
+      //model.write(System.out,"TURTLE");
       return model;
 	}
 	

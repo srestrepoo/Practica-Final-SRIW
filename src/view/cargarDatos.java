@@ -55,6 +55,7 @@ public class cargarDatos extends JFrame {
 		Model model = wifiPlace.getModel();
 		ArrayList<wifiPlace> puntosWifi;
 		String departamento = Users.getActiveUser().getDepartment();
+		System.out.println(departamento);
 		String sparqlQueryString1 = "PREFIX base:<http://www.sistemarecomendacion.com/sitiosWifi#>"  //Prefijo propio de la ontologia
 				+ "SELECT DISTINCT ?municipio ?nombrePuntoWIFI ?tipo ?temperatura "
 				+ "WHERE {"  			
@@ -64,15 +65,17 @@ public class cargarDatos extends JFrame {
 				+ "?puntoWIFI base:name ?nombrePuntoWIFI."
 				+ "?puntoWIFI base:tipo ?tipo."	
 				+ "?puntoWIFI base:temperatura ?temperatura." 										//En nuestra ontologia es posible que exista un 4to
-				+ "FILTER REGEX(?nombreDepartamento,'"+ departamento +"')}";
+				+ "FILTER REGEX(?nombreDepartamento,'"+departamento+"')}";
 		
 		Query q = QueryFactory.create(sparqlQueryString1);											//ya que solo los puntosWIFI tienen este tipo de 
 		QueryExecution qexec = QueryExecutionFactory.create(q,model);
 		//Validar la cantidad de filas
 		try {
+
 			ResultSet results = qexec.execSelect();
 			puntosWifi = new ArrayList<wifiPlace>();
 			System.out.println(results.getRowNumber()); //Cantidad de filas
+			//ResultSetFormatter.out(System.out,results);
 			while ( results.hasNext() ) {
 				if(puntosWifi.size() == 4) {
 					QuerySolution soln = results.nextSolution();
