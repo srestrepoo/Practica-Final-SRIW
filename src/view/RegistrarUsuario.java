@@ -84,8 +84,6 @@ public class RegistrarUsuario extends JFrame {
 			this.setVisible(false);
 			(new cargarDatos()).setVisible(true);
 		}else {
-			System.out.print(textUserName.getText());
-			System.out.print("Campos vacios");
 			System.out.print("Campos vacios");
 		}
 	}
