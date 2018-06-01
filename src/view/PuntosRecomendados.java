@@ -1,23 +1,18 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.jena.query.QueryExecution;
 
 import model.ObjetoRecomendar;
-import model.wifiPlace;
 
 public class PuntosRecomendados extends JFrame {
 
@@ -29,14 +24,14 @@ public class PuntosRecomendados extends JFrame {
 	public PuntosRecomendados(ArrayList<ObjetoRecomendar> puntosCalificar) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 436, 700);
+		setBounds(100, 100, 436, 630);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblPuntosACalificar = new JLabel("PUNTOS RECOMENDADOS");
-		lblPuntosACalificar.setBounds(114, 13, 174, 14);
+		lblPuntosACalificar.setBounds(127, 6, 174, 14);
 		contentPane.add(lblPuntosACalificar);
 		
 		if(puntosCalificar.size() >= 1) {
@@ -67,7 +62,7 @@ public class PuntosRecomendados extends JFrame {
 			panel.add(lblPrimerTemperatura);
 			
 			JLabel lblPrimerTipo = new JLabel(puntosCalificar.get(0).Tipo);
-			lblPrimerTipo.setBounds(91, 49, 125, 16);
+			lblPrimerTipo.setBounds(91, 49, 235, 16);
 			panel.add(lblPrimerTipo);
 			
 			JLabel lblMunicipio = new JLabel("Municipio");
@@ -79,11 +74,11 @@ public class PuntosRecomendados extends JFrame {
 			panel.add(lblDireccion);
 			
 			JLabel label = new JLabel(puntosCalificar.get(0).Municipio);
-			label.setBounds(91, 69, 125, 16);
+			label.setBounds(91, 69, 235, 16);
 			panel.add(label);
 			
 			JLabel label_1 = new JLabel(puntosCalificar.get(0).Direccion);
-			label_1.setBounds(91, 88, 125, 16);
+			label_1.setBounds(91, 88, 235, 16);
 			panel.add(label_1);
 		}
 		if(puntosCalificar.size() >= 2) {
@@ -114,7 +109,7 @@ public class PuntosRecomendados extends JFrame {
 			panel1.add(lblPrimerTemperatura1);
 			
 			JLabel lblPrimerTipo1 = new JLabel(puntosCalificar.get(1).Tipo);
-			lblPrimerTipo1.setBounds(91, 49, 125, 16);
+			lblPrimerTipo1.setBounds(91, 49, 235, 16);
 			panel1.add(lblPrimerTipo1);
 			
 			JLabel lblMunicipio1 = new JLabel("Municipio");
@@ -127,11 +122,11 @@ public class PuntosRecomendados extends JFrame {
 		
 		
 			JLabel label1 = new JLabel(puntosCalificar.get(1).Municipio);
-			label1.setBounds(91, 69, 125, 16);
+			label1.setBounds(91, 69, 235, 16);
 			panel1.add(label1);
 			
 			JLabel label_12 = new JLabel(puntosCalificar.get(1).Direccion);
-			label_12.setBounds(91, 88, 125, 16);
+			label_12.setBounds(91, 88, 235, 16);
 			panel1.add(label_12);
 		}
 		if(puntosCalificar.size() >= 3) {
@@ -163,7 +158,7 @@ public class PuntosRecomendados extends JFrame {
 			panel_1.add(label_6);
 			
 			JLabel label_7 = new JLabel(puntosCalificar.get(2).Tipo);
-			label_7.setBounds(91, 49, 125, 16);
+			label_7.setBounds(91, 49, 235, 16);
 			panel_1.add(label_7);
 			
 			JLabel label_8 = new JLabel("Municipio");
@@ -175,11 +170,11 @@ public class PuntosRecomendados extends JFrame {
 			panel_1.add(label_9);
 			
 			JLabel label_10 = new JLabel(puntosCalificar.get(2).Municipio);
-			label_10.setBounds(91, 69, 125, 16);
+			label_10.setBounds(91, 69, 235, 16);
 			panel_1.add(label_10);
 			
 			JLabel label_11 = new JLabel(puntosCalificar.get(2).Direccion);
-			label_11.setBounds(91, 88, 125, 16);
+			label_11.setBounds(91, 88, 235, 16);
 			panel_1.add(label_11);
 		}
 		if(puntosCalificar.size() >= 4) {
@@ -209,7 +204,7 @@ public class PuntosRecomendados extends JFrame {
 			panel_2.add(label_17);
 			
 			JLabel label_18 = new JLabel(puntosCalificar.get(3).Tipo);
-			label_18.setBounds(91, 49, 125, 16);
+			label_18.setBounds(91, 49, 235, 16);
 			panel_2.add(label_18);
 			
 			JLabel label_19 = new JLabel("Municipio");
@@ -221,11 +216,11 @@ public class PuntosRecomendados extends JFrame {
 			panel_2.add(label_20);
 			
 			JLabel label_21 = new JLabel(puntosCalificar.get(3).Municipio);
-			label_21.setBounds(91, 69, 125, 16);
+			label_21.setBounds(91, 69, 235, 16);
 			panel_2.add(label_21);
 			
 			JLabel label_22 = new JLabel(puntosCalificar.get(3).Direccion);
-			label_22.setBounds(91, 88, 125, 16);
+			label_22.setBounds(91, 88, 235, 16);
 			panel_2.add(label_22);
 			
 		}if(puntosCalificar.size() == 5) {
@@ -255,7 +250,7 @@ public class PuntosRecomendados extends JFrame {
 			panel_3.add(label_27);
 			
 			JLabel label_28 = new JLabel(puntosCalificar.get(4).Tipo);
-			label_28.setBounds(91, 49, 125, 16);
+			label_28.setBounds(91, 49, 235, 16);
 			panel_3.add(label_28);
 			
 			JLabel label_29 = new JLabel("Municipio");
@@ -267,11 +262,11 @@ public class PuntosRecomendados extends JFrame {
 			panel_3.add(label_30);
 			
 			JLabel label_31 = new JLabel(puntosCalificar.get(4).Municipio);
-			label_31.setBounds(91, 69, 125, 16);
+			label_31.setBounds(91, 69, 235, 16);
 			panel_3.add(label_31);
 			
 			JLabel label_32 = new JLabel(puntosCalificar.get(4).Direccion);
-			label_32.setBounds(91, 88, 125, 16);
+			label_32.setBounds(91, 88, 235, 16);
 			panel_3.add(label_32);
 		}
 		this.setLocationRelativeTo(null);

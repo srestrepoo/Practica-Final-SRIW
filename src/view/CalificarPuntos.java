@@ -252,11 +252,22 @@ public class CalificarPuntos extends JFrame {
 	
 	private void calificarPuntos(ActionEvent evt){		
 		ArrayList<String> decisiones = new ArrayList<String>();
-		decisiones.add((String) primerComboBox.getSelectedItem());
-		decisiones.add((String) segundoComboBox.getSelectedItem());
-		decisiones.add((String) tercerComboBox.getSelectedItem());
-		decisiones.add((String) cuartoComboBox.getSelectedItem());
-		decisiones.add((String) quintoComboBox.getSelectedItem());
+		if(PuntosCalificar.size() >= 1) {
+			decisiones.add((String) primerComboBox.getSelectedItem());
+		}
+		if(PuntosCalificar.size() >= 2) {
+			decisiones.add((String) segundoComboBox.getSelectedItem());
+		}
+		if(PuntosCalificar.size() >= 3) {
+			decisiones.add((String) tercerComboBox.getSelectedItem());
+		}
+		if(PuntosCalificar.size() >= 4) {
+			decisiones.add((String) cuartoComboBox.getSelectedItem());
+		}
+		if(PuntosCalificar.size() >= 5) {
+			decisiones.add((String) quintoComboBox.getSelectedItem());
+		}
+		
 		Double[][] matrix = new Double[5][5];
 		
 		for(int i = 0; i < 5; i++){
@@ -265,7 +276,7 @@ public class CalificarPuntos extends JFrame {
             }
         }
 		
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < decisiones.size(); i++) {
 			if(decisiones.get(i).equals("No me gusta")) {
 				if(Double.parseDouble(PuntosCalificar.get(i).getTemperatura()) < 20) {
 					matrix[0][2] = matrix[0][2] + 1.0;
@@ -431,10 +442,11 @@ public class CalificarPuntos extends JFrame {
 			}
 			Arrays.sort(arregloRecomendador);
 			ArrayList<ObjetoRecomendar> recomendados = new ArrayList<ObjetoRecomendar>();
-			for(int j = 0; j < 5; j++) {
+			for(int j = 0; j < arregloRecomendador.length; j++) {
 				recomendados.add(arregloRecomendador[j]);
 			}
 			this.setVisible(false);
+			Users.getActiveUser().setPuntosGustan(recomendados);
 			(new PuntosRecomendados(recomendados)).setVisible(true);
 		}finally {
 			qexec.close();
