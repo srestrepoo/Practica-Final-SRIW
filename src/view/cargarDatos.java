@@ -26,7 +26,7 @@ import javax.swing.JButton;
 public class cargarDatos extends JFrame {
 
 	private JPanel contentPane;
-	ResultSet results;
+	QueryExecution qexec;
 
 	/**
 	 * Create the frame.
@@ -58,7 +58,7 @@ public class cargarDatos extends JFrame {
 		String departamento = Users.getActiveUser().getDepartment();
 		System.out.println(departamento);
 		String sparqlQueryString1 = "PREFIX base:<http://www.sistemarecomendacion.com/sitiosWifi#>"  //Prefijo propio de la ontologia
-				+ "SELECT DISTINCT ?municipio ?nombrePuntoWIFI ?tipo ?temperatura"
+				+ "SELECT DISTINCT ?municipio ?nombrePuntoWIFI ?tipo ?temperatura "
 				+ "WHERE {"  			
 				+ "?departamento base:tiene ?municipio."							//Primera relacion objeto1->tiene->objeto2
 				+ "?municipio base:tiene ?puntoWIFI."								//Primera relacion objeto2->tiene->objeto3
@@ -69,11 +69,11 @@ public class cargarDatos extends JFrame {
 				+ "FILTER REGEX(?nombreDepartamento,'"+departamento+"')}";
 		
 		Query q = QueryFactory.create(sparqlQueryString1);											//ya que solo los puntosWIFI tienen este tipo de 
-		QueryExecution qexec = QueryExecutionFactory.create(q,model);
+		qexec = QueryExecutionFactory.create(q,model);
 		//Validar la cantidad de filas
 		try {
 
-			results = qexec.execSelect();
+			ResultSet results = qexec.execSelect();
 			puntosWifi = new ArrayList<wifiPlace>();
 			System.out.println(results.getRowNumber()); //Cantidad de filas
 			//ResultSetFormatter.out(System.out,results);
@@ -101,6 +101,6 @@ public class cargarDatos extends JFrame {
 	private void CargarDatos(java.awt.event.ActionEvent evt){
 		ArrayList<wifiPlace> puntosCalificar = datosCalificar();
 		this.setVisible(false);
-		(new CalificarPuntos(puntosCalificar, results)).setVisible(true);
+		(new CalificarPuntos(puntosCalificar, qexec)).setVisible(true);
 	}
 }

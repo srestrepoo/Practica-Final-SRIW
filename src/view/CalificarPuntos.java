@@ -4,10 +4,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Model;
 
+import database.Users;
+import model.ObjetoRecomendar;
 import model.wifiPlace;
 
 import javax.swing.JLabel;
@@ -15,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 
 import javax.swing.DefaultComboBoxModel;
@@ -357,15 +364,36 @@ public class CalificarPuntos extends JFrame {
 		matrix[2][4] = (matrix[2][0] + matrix [2][2])/5.0;
 		matrix[3][4] = (matrix[3][0] + matrix [3][2])/5.0;
 		matrix[4][4] = (matrix[4][0] + matrix [4][2])/5.0;
+		Model model = wifiPlace.getModel();
+		String departamento = Users.getActiveUser().getDepartment();
+		String sparqlQueryString1 = "PREFIX base:<http://www.sistemarecomendacion.com/sitiosWifi#>"  //Prefijo propio de la ontologia
+				+ "SELECT DISTINCT ?nombremunicipio ?nombrePuntoWIFI ?tipo ?temperatura ?nombreDepartamento "
+				+ "WHERE {"  			
+				+ "?departamento base:tiene ?municipio."							//Primera relacion objeto1->tiene->objeto2
+				+ "?municipio base:tiene ?puntoWIFI."
+				+ "?municipio base:name ?nombremunicipio."							//Primera relacion objeto2->tiene->objeto3
+				+ "?departamento base:name ?nombreDepartamento."
+				+ "?puntoWIFI base:name ?nombrePuntoWIFI."
+				+ "?puntoWIFI base:tipo ?tipo."	
+				+ "?puntoWIFI base:temperatura ?temperatura." 										//En nuestra ontologia es posible que exista un 4to
+				+ "FILTER REGEX(?nombreDepartamento,'"+departamento+"')}";
 		
-		Hashtable<String, Double> Megusta = new Hashtable<String, Double>();
+		Query q = QueryFactory.create(sparqlQueryString1);											//ya que solo los puntosWIFI tienen este tipo de 
+		QueryExecution qexec = QueryExecutionFactory.create(q,model);
+		
+		ObjetoRecomendar[] arregloRecomendador;
 		try {
-			ResultSet resultsNew = results.execSelect();
+			ResultSet resultsNew = qexec.execSelect();
+			System.out.println(resultsNew.getRowNumber());
+			ArrayList<ObjetoRecomendar> arregloRecomendadorTemporal = new ArrayList<ObjetoRecomendar>();
+			int i = 0;
 			while ( resultsNew.hasNext() ) {
 				QuerySolution soln = resultsNew.nextSolution();
 				String tipo = soln.getLiteral("tipo").getString();
 	            String temperatura = soln.getLiteral("temperatura").getString();
 	            String nombre = soln.getLiteral("nombrePuntoWIFI").getString();
+	            String municipio = soln.getLiteral("nombremunicipio").getString();
+	            String departament = soln.getLiteral("nombreDepartamento").getString();
 	            String temperaturaTemporal = "";
 	            if(Double.parseDouble(temperatura) < 20) {
 	            	temperaturaTemporal = "Frio";
@@ -390,10 +418,19 @@ public class CalificarPuntos extends JFrame {
 	            }else if(temperaturaTemporal=="Caliente" && tipo=="Abierto"){
 	                probabilidadGustar = ((0.5)*(matrix[2][1])*matrix[3][1])/((matrix[2][4]*matrix[3][4]));
 	            }      
-	            
-	            Megusta.put(nombre, probabilidadGustar);
-	            
+	            System.out.println(nombre + " " + probabilidadGustar + " " + municipio + " " + departament);
+	            arregloRecomendadorTemporal.add(new ObjetoRecomendar(nombre, probabilidadGustar));
 	    	}
-		}finally {}
+			arregloRecomendador = new ObjetoRecomendar[arregloRecomendadorTemporal.size()];
+			for(int j = 0; j < arregloRecomendadorTemporal.size(); j++) {
+				arregloRecomendador[j] = arregloRecomendadorTemporal.get(j);
+			}
+			
+			
+			Arrays.sort(arregloRecomendador);
+			
+		}finally {
+			qexec.close();
+		}
 	}
 }
