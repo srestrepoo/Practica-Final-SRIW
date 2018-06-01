@@ -48,10 +48,13 @@ public class wifiPlace {
 		Temperatura = temperatura;
 		Tipo = tipo;
 	}
-
+	private static Model instance = null;
 	public static Model getModel(){
-		llenarTemp();
-		return loadDataBase();
+		if(instance == null) {
+			llenarTemp();
+			return loadDataBase();
+		}
+		return instance;
 	}
 	
 	/**
@@ -107,10 +110,10 @@ public class wifiPlace {
 	        nombres[6] = getTemperatura(nombres[2]);
 	         //Agregar datos al modelo
 	        
-	    	recursos[0] = model.createResource(personURI + nombres[0]);
+	    	recursos[0] = model.createResource(personURI + nombres[0] + " de " + nombres[2]);
     	    recursos[1] = model.createResource(personURI + nombres[1]);
     	    recursos[2] = model.createResource(personURI + nombres[2]);
-    	    recursos[3] = model.createResource(personURI + "geo" + nombres[0]);
+    	    recursos[3] = model.createResource(personURI + "geo" + nombres[0] + " de " + nombres[2]);
     	   
     	    recursos[1].addProperty(tiene, recursos[2]);
     	    recursos[1].addProperty(name, nombres[1]);
@@ -180,6 +183,7 @@ public class wifiPlace {
 
       //escribe el modelo en forma de XML
       //model.write(System.out,"TURTLE");
+        
       return model;
 	}
 	

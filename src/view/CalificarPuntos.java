@@ -366,11 +366,14 @@ public class CalificarPuntos extends JFrame {
 		matrix[4][4] = (matrix[4][0] + matrix [4][2])/5.0;
 		Model model = wifiPlace.getModel();
 		String departamento = Users.getActiveUser().getDepartment();
+		
 		String sparqlQueryString1 = "PREFIX base:<http://www.sistemarecomendacion.com/sitiosWifi#>"  //Prefijo propio de la ontologia
-				+ "SELECT DISTINCT ?nombremunicipio ?nombrePuntoWIFI ?tipo ?temperatura ?nombreDepartamento "
+				+ "SELECT DISTINCT ?nombremunicipio ?nombrePuntoWIFI ?tipo ?temperatura ?nombreDepartamento ?direccion "
 				+ "WHERE {"  			
 				+ "?departamento base:tiene ?municipio."							//Primera relacion objeto1->tiene->objeto2
 				+ "?municipio base:tiene ?puntoWIFI."
+				+ "?puntoWIFI base:tiene ?geo."
+				+ "?geo base:direccion ?direccion."
 				+ "?municipio base:name ?nombremunicipio."							//Primera relacion objeto2->tiene->objeto3
 				+ "?departamento base:name ?nombreDepartamento."
 				+ "?puntoWIFI base:name ?nombrePuntoWIFI."
@@ -386,7 +389,6 @@ public class CalificarPuntos extends JFrame {
 			ResultSet resultsNew = qexec.execSelect();
 			System.out.println(resultsNew.getRowNumber());
 			ArrayList<ObjetoRecomendar> arregloRecomendadorTemporal = new ArrayList<ObjetoRecomendar>();
-			int i = 0;
 			while ( resultsNew.hasNext() ) {
 				QuerySolution soln = resultsNew.nextSolution();
 				String tipo = soln.getLiteral("tipo").getString();
@@ -394,6 +396,7 @@ public class CalificarPuntos extends JFrame {
 	            String nombre = soln.getLiteral("nombrePuntoWIFI").getString();
 	            String municipio = soln.getLiteral("nombremunicipio").getString();
 	            String departament = soln.getLiteral("nombreDepartamento").getString();
+	            String direccion = soln.getLiteral("direccion").getString();
 	            String temperaturaTemporal = "";
 	            if(Double.parseDouble(temperatura) < 20) {
 	            	temperaturaTemporal = "Frio";
@@ -417,18 +420,22 @@ public class CalificarPuntos extends JFrame {
 	                probabilidadGustar = ((0.5)*(matrix[2][1])*matrix[4][1])/((matrix[2][4]*matrix[4][4]));
 	            }else if(temperaturaTemporal=="Caliente" && tipo=="Abierto"){
 	                probabilidadGustar = ((0.5)*(matrix[2][1])*matrix[3][1])/((matrix[2][4]*matrix[3][4]));
-	            }      
-	            System.out.println(nombre + " " + probabilidadGustar + " " + municipio + " " + departament);
-	            arregloRecomendadorTemporal.add(new ObjetoRecomendar(nombre, probabilidadGustar));
+	            }
+	            if(probabilidadGustar <=  1) {
+	            	arregloRecomendadorTemporal.add(new ObjetoRecomendar(nombre, temperatura, direccion, departament, municipio , tipo ,probabilidadGustar));
+	            }
 	    	}
 			arregloRecomendador = new ObjetoRecomendar[arregloRecomendadorTemporal.size()];
 			for(int j = 0; j < arregloRecomendadorTemporal.size(); j++) {
 				arregloRecomendador[j] = arregloRecomendadorTemporal.get(j);
 			}
-			
-			
 			Arrays.sort(arregloRecomendador);
-			
+			ArrayList<ObjetoRecomendar> recomendados = new ArrayList<ObjetoRecomendar>();
+			for(int j = 0; j < 5; j++) {
+				recomendados.add(arregloRecomendador[j]);
+			}
+			this.setVisible(false);
+			(new PuntosRecomendados(recomendados)).setVisible(true);
 		}finally {
 			qexec.close();
 		}
