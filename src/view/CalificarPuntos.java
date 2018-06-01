@@ -4,6 +4,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+
 import model.wifiPlace;
 
 import javax.swing.JLabel;
@@ -11,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
@@ -24,12 +29,16 @@ public class CalificarPuntos extends JFrame {
 	private JComboBox<String> tercerComboBox;
 	private JComboBox<String> cuartoComboBox;
 	private JComboBox<String> quintoComboBox;
+	private ArrayList<wifiPlace> PuntosCalificar;
+	private QueryExecution results;
 
 	/**
 	 * Create the frame.
 	 */
-	public CalificarPuntos(ArrayList<wifiPlace> puntosCalificar) {
+	public CalificarPuntos(ArrayList<wifiPlace> puntosCalificar, QueryExecution query) {
 		
+		PuntosCalificar = puntosCalificar;
+		results = query;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 436, 515);
 		contentPane = new JPanel();
@@ -229,16 +238,162 @@ public class CalificarPuntos extends JFrame {
 			JLabel lblQuintoTipo = new JLabel(puntosCalificar.get(4).getTipo());
 			lblQuintoTipo.setBounds(94, 49, 125, 16);
 			panel_4.add(lblQuintoTipo);
-			this.setLocationRelativeTo(null);
 		}
+		this.setLocationRelativeTo(null);
 		
 	}
 	
-	private void calificarPuntos(ActionEvent evt){
-		System.out.println(primerComboBox.getSelectedItem());
-		System.out.println(segundoComboBox.getSelectedItem());
-		System.out.println(tercerComboBox.getSelectedItem());
-		System.out.println(cuartoComboBox.getSelectedItem());
-		System.out.println(quintoComboBox.getSelectedItem());
+	private void calificarPuntos(ActionEvent evt){		
+		ArrayList<String> decisiones = new ArrayList<String>();
+		decisiones.add((String) primerComboBox.getSelectedItem());
+		decisiones.add((String) segundoComboBox.getSelectedItem());
+		decisiones.add((String) tercerComboBox.getSelectedItem());
+		decisiones.add((String) cuartoComboBox.getSelectedItem());
+		decisiones.add((String) quintoComboBox.getSelectedItem());
+		Double[][] matrix = new Double[5][5];
+		
+		for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+               matrix[i][j] = 0.0;  
+            }
+        }
+		
+		for(int i = 0; i < 5; i++) {
+			if(decisiones.get(i).equals("No me gusta")) {
+				if(Double.parseDouble(PuntosCalificar.get(i).getTemperatura()) < 20) {
+					matrix[0][2] = matrix[0][2] + 1.0;
+				}else if(Double.parseDouble(PuntosCalificar.get(i).getTemperatura()) < 25) {
+					matrix[1][2] = matrix[1][2] + 1.0;
+				}else if(Double.parseDouble(PuntosCalificar.get(i).getTemperatura()) >= 25) {
+					matrix[2][2] = matrix[2][2] + 1.0;
+				}
+				
+				if(PuntosCalificar.get(i).getTipo().equals("Abierto")) {
+					matrix[3][2] = matrix[3][2] + 1.0;
+				}else if(PuntosCalificar.get(i).getTipo().equals("Cerrado")){
+					matrix[4][2] = matrix[4][2] + 1.0;
+				}
+			}else if(decisiones.get(i).equals("Me gusta")) {
+				if(Double.parseDouble(PuntosCalificar.get(i).getTemperatura()) < 20) {
+					matrix[0][0] = matrix[0][0] + 1.0;
+				}else if(Double.parseDouble(PuntosCalificar.get(i).getTemperatura()) < 25) {
+					matrix[1][0] = matrix[1][0] + 1.0;
+				}else if(Double.parseDouble(PuntosCalificar.get(i).getTemperatura()) >= 25) {
+					matrix[2][0] = matrix[2][0] + 1.0;
+				}
+				
+				if(PuntosCalificar.get(i).getTipo().equals("Abierto")) {
+					matrix[3][0] = matrix[3][0] + 1.0;
+				}else if(PuntosCalificar.get(i).getTipo().equals("Cerrado")){
+					matrix[4][0] = matrix[4][0] + 1.0;
+				}
+			}
+		}
+		
+		//Probabilidad de que me gusta
+		if(matrix[0][0] == 0) {
+			matrix[0][1] = 0.01;
+		}else {
+			matrix[0][1] = matrix[0][0]/5.0;
+		}
+		
+		if(matrix[1][0] == 0) {
+			matrix[1][1] = 0.01;
+		}else {
+			matrix[1][1] = matrix[1][0]/5.0;
+		}
+		
+		if(matrix[2][0] == 0) {
+			matrix[2][1] = 0.01;
+		}else {
+			matrix[2][1] = matrix[2][0]/5.0;
+		}
+		
+		if(matrix[3][0] == 0) {
+			matrix[3][1] = 0.01;
+		}else {
+			matrix[3][1] = matrix[3][0]/5.0;
+		}
+		
+		if(matrix[4][0] == 0) {
+			matrix[4][1] = 0.01;
+		}else {
+			matrix[4][1] = matrix[4][0]/5.0;
+		}
+		
+		
+		//Probabilidad de que no me gusta
+		if(matrix[0][2] == 0) {
+			matrix[0][3] = 0.01;
+		}else {
+			matrix[0][3] = matrix[0][2]/5.0;
+		}
+		
+		if(matrix[1][2] == 0) {
+			matrix[1][3] = 0.01;
+		}else {
+			matrix[1][3] = matrix[1][2]/5.0;
+		}
+		
+		if(matrix[2][2] == 0) {
+			matrix[2][3] = 0.01;
+		}else {
+			matrix[2][3] = matrix[2][2]/5.0;
+		}
+		
+		if(matrix[3][2] == 0) {
+			matrix[3][3] = 0.01;
+		}else {
+			matrix[3][3] = matrix[3][2]/5.0;
+		}
+		
+		if(matrix[4][2] == 0) {
+			matrix[4][3] = 0.01;
+		}else {
+			matrix[4][3] = matrix[4][3]/5.0;
+		}
+		matrix[0][4] = (matrix[0][0] + matrix [0][2])/5.0;
+		matrix[1][4] = (matrix[1][0] + matrix [1][2])/5.0;
+		matrix[2][4] = (matrix[2][0] + matrix [2][2])/5.0;
+		matrix[3][4] = (matrix[3][0] + matrix [3][2])/5.0;
+		matrix[4][4] = (matrix[4][0] + matrix [4][2])/5.0;
+		
+		Hashtable<String, Double> Megusta = new Hashtable<String, Double>();
+		try {
+			ResultSet resultsNew = results.execSelect();
+			while ( resultsNew.hasNext() ) {
+				QuerySolution soln = resultsNew.nextSolution();
+				String tipo = soln.getLiteral("tipo").getString();
+	            String temperatura = soln.getLiteral("temperatura").getString();
+	            String nombre = soln.getLiteral("nombrePuntoWIFI").getString();
+	            String temperaturaTemporal = "";
+	            if(Double.parseDouble(temperatura) < 20) {
+	            	temperaturaTemporal = "Frio";
+				}else if(Double.parseDouble(temperatura) < 25) {
+					temperaturaTemporal = "Tibio";
+				}else if(Double.parseDouble(temperatura) >= 25) {
+					temperaturaTemporal = "Caliente";
+				}
+	            
+	            double probabilidadGustar = 0.0;
+	            
+	            if (temperaturaTemporal=="Frio" && tipo== "Cerrado") {
+	                probabilidadGustar = ((0.5)*(matrix[0][1])*matrix[4][1])/((matrix[0][4]*matrix[4][4]));           
+	            }else if(temperaturaTemporal=="Frio" && tipo=="Abierto"){
+	                probabilidadGustar = ((0.5)*(matrix[0][1])*matrix[3][1])/((matrix[0][4]*matrix[3][4])); 
+	            }else if(temperaturaTemporal=="Tibio" && tipo=="Cerrado"){
+	                probabilidadGustar = ((0.5)*(matrix[1][1])*matrix[4][1])/((matrix[1][4]*matrix[4][4]));
+	            }else if(temperaturaTemporal=="Tibio" && tipo=="Abierto"){
+	                probabilidadGustar = ((0.5)*(matrix[1][1])*matrix[3][1])/((matrix[1][4]*matrix[3][4]));
+	            }else if(temperaturaTemporal=="Caliente" && tipo=="Cerrado"){
+	                probabilidadGustar = ((0.5)*(matrix[2][1])*matrix[4][1])/((matrix[2][4]*matrix[4][4]));
+	            }else if(temperaturaTemporal=="Caliente" && tipo=="Abierto"){
+	                probabilidadGustar = ((0.5)*(matrix[2][1])*matrix[3][1])/((matrix[2][4]*matrix[3][4]));
+	            }      
+	            
+	            Megusta.put(nombre, probabilidadGustar);
+	            
+	    	}
+		}finally {}
 	}
 }
